@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    teak_util (0.1.0)
+    teak_util (0.1.1)
       aws-sdk-s3 (>= 1.102)
       business_flow (>= 0.18.0)
       mime-types (>= 3)
