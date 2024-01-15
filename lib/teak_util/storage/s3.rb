@@ -42,7 +42,7 @@ module TeakUtil
         @bucket.object(path).put(
           opts.merge(@put_opts.merge(body: value))
         )
-        true
+        path
       end
 
       # Retrieves the value stored at key

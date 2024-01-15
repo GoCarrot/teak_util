@@ -21,7 +21,7 @@ module TeakUtil
       lookup :storage, by: [:bucket_name, :prefix], with: -> { Storage::S3.new(bucket_name, prefix: "#{prefix}#{time_prefix}") }
       uses(:time_prefix) { Time.now.utc.strftime('%Y/%m/%d/') }
 
-      provides :stored_file_name, :public_url
+      provides :stored_file_name, :public_url, :full_path
 
       step :convert_data
       step :store_data
@@ -70,7 +70,7 @@ module TeakUtil
           content_disposition: "attachment; filename=\"#{stored_file_name}\""
         }
         opts[:content_type] = content_type if content_type
-        storage.put(stored_file_name, data, opts)
+        self.full_path = storage.put(stored_file_name, data, opts)
 
         self.public_url = storage.public_url(stored_file_name)
       end

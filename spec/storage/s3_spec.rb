@@ -32,6 +32,10 @@ RSpec.describe TeakUtil::Storage::S3 do
         hash_including(bucket: bucket, key: fully_qualified_key, body: value)
       )
     end
+
+    it 'returns the fully qualifed key' do
+      expect(storage.put(key, value)).to eq fully_qualified_key
+    end
   end
 
   shared_examples_for 'get' do

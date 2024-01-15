@@ -32,7 +32,7 @@ RSpec.describe TeakUtil::Storage::MakeExternallyAvailableFile do
     Timecop.freeze
     allow(Aws::S3::Client).to receive(:new).and_return(client)
     allow(TeakUtil::Storage::S3).to receive(:new).and_return(storage)
-    allow(storage).to receive(:put) { |key, value, opts={}| @value = value; nil }
+    allow(storage).to receive(:put) { |key, value, opts={}| @value = value; "#{prefix}/#{key}" }
     allow(storage).to receive(:public_url).and_return(url)
     @result = perform
   end
@@ -58,6 +58,10 @@ RSpec.describe TeakUtil::Storage::MakeExternallyAvailableFile do
 
   it 'provides the public url' do
     expect(result.public_url).to eq url
+  end
+
+  it 'provides the fully qualifed key' do
+    expect(result.full_path).to eq "#{prefix}/#{key}"
   end
 
   context 'with compress' do
