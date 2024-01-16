@@ -63,6 +63,35 @@ RSpec.describe TeakUtil::Storage::S3 do
     end
   end
 
+  shared_examples_for 'del' do
+    let(:client) do
+      Aws::S3::Client.new(
+        stub_responses: {
+          delete_object: { }
+        }
+      )
+    end
+
+    before { allow(client).to receive(:delete_object).and_call_original }
+
+    it 'deletes the correct object' do
+      storage.del(key)
+      expect(client).to have_received(:delete_object).with(
+        hash_including(bucket: bucket, key: fully_qualified_key)
+      )
+    end
+  end
+
+  describe '#del' do
+    include_examples 'del'
+
+    context 'with a key prefix' do
+      let(:prefix) { 'some/hierarchy/'}
+
+      include_examples 'del'
+    end
+  end
+
   describe '#put' do
     before { allow(client).to receive(:put_object).and_call_original }
 

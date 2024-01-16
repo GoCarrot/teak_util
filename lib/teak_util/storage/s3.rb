@@ -38,7 +38,7 @@ module TeakUtil
       # @option opts [String] :content_type A standard MIME type describing the format of the contents.
       # @option opts [String] :content_disposition Specifies presentational information for the object.
       def put(key, value, opts = {})
-        path = "#{@prefix}#{key}"
+        path = prefixed_path(key)
         @bucket.object(path).put(
           opts.merge(@put_opts.merge(body: value))
         )
@@ -48,12 +48,17 @@ module TeakUtil
       # Retrieves the value stored at key
       # @param key [String]
       def get(key)
-        path = "#{@prefix}#{key}"
         begin
-          @bucket.object(path).get.body.read
+          @bucket.object(prefixed_path(key)).get.body.read
         rescue Aws::S3::Errors::NoSuchKey
           return nil
         end
+      end
+
+      # Deletes the value stored at key
+      # @param key [String]
+      def del(key)
+        @bucket.object(prefixed_path(key)).delete
       end
 
       # Returns a URL which allows public access to the data stored at key
@@ -62,6 +67,12 @@ module TeakUtil
       def public_url(key, expires_in: 1.week)
         path = "#{@prefix}#{key}"
         @bucket.object(path).presigned_url(:get, expires_in: expires_in.to_i)
+      end
+
+    private
+
+      def prefixed_path(key)
+        "#{@prefix}#{key}"
       end
     end
   end
