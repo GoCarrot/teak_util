@@ -1,3 +1,9 @@
+## 0.1.2
+
+ENHANCEMENTS:
+
+* Added Storage::S3#del to delete objects from S3.
+
 ## 0.1.1
 
 ENHANCEMENTS:
