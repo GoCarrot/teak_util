@@ -1,3 +1,9 @@
+## 0.1.3
+
+ENHANCEMENTS:
+
+* Added Storage::S3#bucket_name to read back configured bucket name.
+
 ## 0.1.2
 
 ENHANCEMENTS:
