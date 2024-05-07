@@ -69,6 +69,11 @@ module TeakUtil
         @bucket.object(path).presigned_url(:get, expires_in: expires_in.to_i)
       end
 
+      # Returns the name of the bucket.
+      def bucket_name
+        @bucket.name
+      end
+
     private
 
       def prefixed_path(key)

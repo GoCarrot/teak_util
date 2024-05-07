@@ -82,6 +82,12 @@ RSpec.describe TeakUtil::Storage::S3 do
     end
   end
 
+  describe '#bucket_name' do
+    it 'returns the name of the bucket' do
+      expect(storage.bucket_name).to eq bucket
+    end
+  end
+
   describe '#del' do
     include_examples 'del'
 
