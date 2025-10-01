@@ -23,7 +23,7 @@ RSpec.describe TeakUtil::Storage::S3 do
     }
   end
 
-  subject(:storage) { described_class.new(bucket, opts) }
+  subject(:storage) { described_class.new(bucket, **opts) }
 
   shared_examples_for 'put' do
     it 'writes the object' do
