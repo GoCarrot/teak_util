@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "A collection of utilities used by multiple projects at Teak"
   spec.homepage      = "https://github.com/GoCarrot/teak_util"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
   spec.license = "Apache-2.0"
 
