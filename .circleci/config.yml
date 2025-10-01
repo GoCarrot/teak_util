@@ -28,6 +28,7 @@ jobs:
   build:
     docker:
       - image: *RUBY_IMAGE
+    working_directory: ~/teak_util-build
     steps:
       - checkout
       - restore_cache:
