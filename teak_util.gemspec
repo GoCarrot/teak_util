@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "aws-sdk-s3", ">= 1.102"
   spec.add_dependency "business_flow", ">= 0.18.0"
   spec.add_dependency "mime-types", ">= 3"
-  spec.add_dependency "rubyzip", "~> 2.3"
+  spec.add_dependency "rubyzip", ">= 2.3", "< 4.0"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
