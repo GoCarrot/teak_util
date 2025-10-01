@@ -75,6 +75,8 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.1)
+    rspec_junit_formatter (0.6.0)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubyzip (2.3.2)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -93,6 +95,7 @@ DEPENDENCIES
   nokogiri (~> 1.18)
   rake (~> 13.0)
   rspec (~> 3.0)
+  rspec_junit_formatter
   simplecov (~> 0.22.0)
   teak_util!
   timecop (~> 0.9.8)
