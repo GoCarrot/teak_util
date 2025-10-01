@@ -1,13 +1,139 @@
 version: 2.1
+
+references:
+  RUBY_IMAGE: &RUBY_IMAGE
+    cimg/ruby:3.3
+  CACHE_KEY: &BUNDLE_CACHE_KEY
+    v1-teak_util-bundle-{{ checksum "Gemfile.lock" }}
+
 jobs:
-  build:
+  refresh_ruby_deps:
     docker:
-      - image: ruby:3.0.0
+      - image: *RUBY_IMAGE
+        environment:
+          RACK_ENV: test
+    working_directory: ~/teak_util-build
     steps:
       - checkout
+      - restore_cache:
+          key: *BUNDLE_CACHE_KEY
+      - run: bundle config set --local path 'vendor/bundle'
+      - run: bundle install --jobs 3 --retry 3
+      - save_cache:
+          key: *BUNDLE_CACHE_KEY
+          paths:
+            - ~/teak_util-build/vendor/bundle
+            - ~/teak_util-build/.bundle
+
+  build:
+    docker:
+      - image: *RUBY_IMAGE
+    steps:
+      - checkout
+      - restore_cache:
+          key: *BUNDLE_CACHE_KEY
+
       - run:
           name: Run the default task
           command: |
-            gem install bundler -v 2.2.3
-            bundle install
             bundle exec rake
+
+  rspec:
+    docker:
+      - image: *RUBY_IMAGE
+        environment:
+          RACK_ENV: test
+    working_directory: ~/teak_util-build
+    steps:
+      - checkout
+      - restore_cache:
+          key: *BUNDLE_CACHE_KEY
+
+      - run: mkdir ~/rspec
+      - run:
+          command: |
+            circleci tests glob "spec/**/*_spec.rb" | circleci tests run --command="xargs ruby --yjit bin/rspec --format progress --format RspecJunitFormatter -o ~/rspec/rspec.xml" --verbose --split-by=timings
+      - store_test_results:
+          path: ~/rspec
+      - store_artifacts:
+          path: ~/rspec/rspec.xml
+      - run: mv ./coverage /tmp/coverage_${CIRCLE_NODE_INDEX}
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+          - "coverage_*"
+
+  # report_coverage:
+  #   docker:
+  #     - image: *RUBY_IMAGE
+  #       environment:
+  #         RAILS_ENV: development
+  #   working_directory: ~/teak_util-build
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: *BUNDLE_CACHE_KEY
+  #     - attach_workspace:
+  #         at: /tmp/coverage
+  #     # N.B. if debugging, add `LIBRATO_LOG_LEVEL=trace`:
+  #     - run: bundle exec rake report:coverage
+
+  # lint_bundler_audit:
+  #   docker:
+  #     - image: *RUBY_IMAGE
+  #   working_directory: ~/teak_util-build
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: *BUNDLE_CACHE_KEY
+  #     - run: bundle exec rake lint:bundler_audit
+
+  # lint_rubocop:
+  #   docker:
+  #     - image: *RUBY_IMAGE
+  #   working_directory: ~/teak_util-build
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: *BUNDLE_CACHE_KEY
+  #     - run: bundle exec rake lint:rubocop
+
+  # report_rubocop:
+  #   docker:
+  #     - image: *RUBY_IMAGE
+  #       environment:
+  #         RAILS_ENV: development
+  #   working_directory: ~/teak_util-build
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: *BUNDLE_CACHE_KEY
+  #     - run: bundle exec rake report:rubocop
+
+workflows:
+  default:
+    jobs:
+      - refresh_ruby_deps
+      - rspec:
+          requires:
+            - refresh_ruby_deps
+      # - report_coverage:
+      #     requires:
+      #       - rspec
+      #     context:
+      #       - DataDog
+      # - lint_bundler_audit:
+      #     requires:
+      #       - refresh_ruby_deps
+      #       - refresh_js_deps
+      # - lint_rubocop:
+      #     requires:
+      #       - refresh_ruby_deps
+      # - report_rubocop:
+      #     requires:
+      #       - refresh_ruby_deps
+      #     context:
+      #       - DataDog
+      - build:
+          requires:
+            - rspec
