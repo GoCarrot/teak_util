@@ -4,7 +4,7 @@ references:
   RUBY_IMAGE: &RUBY_IMAGE
     cimg/ruby:3.3
   CACHE_KEY: &BUNDLE_CACHE_KEY
-    v1-teak_util-bundle-{{ checksum "Gemfile.lock" }}
+    v2-teak_util-bundle-{{ checksum "Gemfile.lock" }}
 
 jobs:
   refresh_ruby_deps:
