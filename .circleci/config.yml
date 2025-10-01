@@ -35,9 +35,9 @@ jobs:
           key: *BUNDLE_CACHE_KEY
 
       - run:
-          name: Run the default task
+          name: Run the build task
           command: |
-            bundle exec rake
+            bundle exec rake build
 
   rspec:
     docker:
