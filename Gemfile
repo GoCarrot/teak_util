@@ -12,3 +12,6 @@ gem "rspec", "~> 3.0"
 gem 'timecop', '~> 0.9.8'
 
 gem 'simplecov', '~> 0.22.0'
+gem 'rspec_junit_formatter'
+
+gem "nokogiri", "~> 1.18"

@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "A collection of utilities used by multiple projects at Teak"
   spec.homepage      = "https://github.com/GoCarrot/teak_util"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
   spec.license = "Apache-2.0"
 
@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "aws-sdk-s3", ">= 1.102"
   spec.add_dependency "business_flow", ">= 0.18.0"
   spec.add_dependency "mime-types", ">= 3"
-  spec.add_dependency "rubyzip", "~> 2.3"
+  spec.add_dependency "rubyzip", ">= 2.3", "< 4.0"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

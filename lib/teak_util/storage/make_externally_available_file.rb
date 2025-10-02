@@ -47,7 +47,7 @@ module TeakUtil
       def convert_data
         self.data =
           if multiple_files?
-            Zip::File.open_buffer(StringIO.new(String.new)) do |zip_file|
+            Zip::File.open_buffer(StringIO.new(String.new), create: true) do |zip_file|
               value.each do |(fname, contents)|
                 zip_file.file.open(fname, +'w') do |file|
                   file.write(contents)
@@ -55,7 +55,7 @@ module TeakUtil
               end
             end.string
           elsif compress
-            Zip::File.open_buffer(StringIO.new(String.new)) do |zip_file|
+            Zip::File.open_buffer(StringIO.new(String.new), create: true) do |zip_file|
               zip_file.file.open(key, +'w') do |file|
                 file.write(value)
               end

@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Jettison compatibility for Ruby 3.2 and below.
+
 ## 0.1.3
 
 ENHANCEMENTS:
