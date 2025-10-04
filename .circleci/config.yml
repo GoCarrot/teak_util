@@ -76,7 +76,6 @@ jobs:
   #         key: *BUNDLE_CACHE_KEY
   #     - attach_workspace:
   #         at: /tmp/coverage
-  #     # N.B. if debugging, add `LIBRATO_LOG_LEVEL=trace`:
   #     - run: bundle exec rake report:coverage
 
   # lint_bundler_audit:
