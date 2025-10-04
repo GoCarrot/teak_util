@@ -2,7 +2,7 @@ version: 2.1
 
 references:
   RUBY_IMAGE: &RUBY_IMAGE
-    cimg/ruby:3.3
+    cimg/ruby:3.3.9
   CACHE_KEY: &BUNDLE_CACHE_KEY
     v2-teak_util-bundle-{{ checksum "Gemfile.lock" }}
 
