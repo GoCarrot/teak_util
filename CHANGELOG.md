@@ -1,3 +1,10 @@
+## 0.3.0
+
+ENHANCEMENTS:
+
+* Added TestDatabaseName for deriving worktree-scoped test database names, and
+  purging databases left behind by worktrees that no longer exist.
+
 ## 0.2.0
 
 * Jettison compatibility for Ruby 3.2 and below.
