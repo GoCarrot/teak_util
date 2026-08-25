@@ -4,6 +4,11 @@ require 'teak_util/test_database_name'
 require 'tmpdir'
 
 RSpec.describe TeakUtil::TestDatabaseName do
+  it 'loads without pulling in the rest of the gem' do
+    script = "require 'teak_util/test_database_name'; exit(defined?(Aws) ? 1 : 0)"
+    expect(system(RbConfig.ruby, '-Ilib', '-e', script)).to be true
+  end
+
   describe '.for_worktree' do
     it 'returns base unmodified for the main worktree, case-insensitively', :aggregate_failures do
       expect(described_class.for_worktree('taro', base: 'taro_posts_test', main_worktree: 'taro'))

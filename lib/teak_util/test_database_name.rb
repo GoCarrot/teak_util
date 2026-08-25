@@ -14,7 +14,7 @@ module TeakUtil
     HASH_LENGTH = 8
 
     DEFAULT_WORKTREE_LISTER = lambda do
-      output = `git worktree list --porcelain`
+      output = `git worktree list --porcelain 2>/dev/null`
       raise '`git worktree list --porcelain` failed. Are you in a git repository?' unless $CHILD_STATUS.success?
 
       output
@@ -31,6 +31,8 @@ module TeakUtil
       downcased = basename.downcase
       return base if downcased == main_worktree.downcase
 
+      # core_app's `CREATE DATABASE #{db}` is unquoted, so a non-identifier character
+      # is a syntax error, not a style choice.
       sanitized = downcased.gsub(/[^a-z0-9]+/, '_')
       budget = MAX_IDENTIFIER_LENGTH - base.length - 1 # 1 for the joining underscore
       raise ArgumentError, "base #{base.inspect} leaves no room for a worktree suffix" if budget <= 0
