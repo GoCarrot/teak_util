@@ -1,3 +1,11 @@
+## 0.4.0
+
+ENHANCEMENTS:
+
+* Added TeakUtil::DecimalJson (`wire` / `dump`) to write BigDecimal as an exact, bare
+  plain-notation JSON number through JSON.generate, ActiveSupport and Oj (compat).
+  Whole values become integers; NaN and Infinity raise.
+
 ## 0.3.0
 
 ENHANCEMENTS:
