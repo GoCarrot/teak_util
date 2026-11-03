@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    teak_util (0.3.0)
+    teak_util (0.4.0)
       aws-sdk-s3 (>= 1.102)
+      bigdecimal
       business_flow (>= 0.18.0)
       mime-types (>= 3)
       rubyzip (>= 2.3, < 4.0)
@@ -68,6 +69,8 @@ GEM
     nokogiri (1.18.10)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    oj (3.17.8)
+      bigdecimal (>= 3.0)
     racc (1.8.1)
     rake (13.3.0)
     rspec (3.13.1)
@@ -103,6 +106,7 @@ PLATFORMS
 
 DEPENDENCIES
   nokogiri (~> 1.18)
+  oj (~> 3.16)
   rake (~> 13.0)
   rspec (~> 3.0)
   rspec_junit_formatter

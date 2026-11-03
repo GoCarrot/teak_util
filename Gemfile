@@ -15,3 +15,4 @@ gem 'simplecov', '~> 0.22.0'
 gem 'rspec_junit_formatter'
 
 gem "nokogiri", "~> 1.18"
+gem "oj", "~> 3.16"

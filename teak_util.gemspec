@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "aws-sdk-s3", ">= 1.102"
+  spec.add_dependency "bigdecimal"
   spec.add_dependency "business_flow", ">= 0.18.0"
   spec.add_dependency "mime-types", ">= 3"
   spec.add_dependency "rubyzip", ">= 2.3", "< 4.0"
